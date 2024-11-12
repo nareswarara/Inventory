@@ -26,27 +26,36 @@ import kotlinx.coroutines.flow.Flow
  */
 interface ItemsRepository {
     /**
-     * Retrieve all the items from the the given data source.
+     * Mengambil semua item dari sumber data.
+     * @return `Flow<List<Item>>` memungkinkan pengamatan data secara reaktif.
      */
     fun getAllItemsStream(): Flow<List<Item>>
 
     /**
-     * Retrieve an item from the given data source that matches with the [id].
+     * Mengambil item tertentu dari sumber data berdasarkan [id].
+     * @param id adalah kunci utama untuk menemukan item.
+     * @return `Flow<Item?>` memberikan aliran data yang memperbarui UI saat ada perubahan di database.
      */
     fun getItemStream(id: Int): Flow<Item?>
 
     /**
-     * Insert item in the data source
+     * Menyisipkan item baru ke dalam sumber data.
+     * @param item adalah entitas [Item] yang akan ditambahkan ke database.
+     * Fungsi ini menggunakan `suspend` agar dapat berjalan di dalam coroutine.
      */
     suspend fun insertItem(item: Item)
 
     /**
-     * Delete item from the data source
+     * Menghapus item dari sumber data.
+     * @param item adalah entitas [Item] yang akan dihapus dari database.
+     * Fungsi ini menggunakan `suspend` agar dapat berjalan di dalam coroutine.
      */
     suspend fun deleteItem(item: Item)
 
     /**
-     * Update item in the data source
+     * Memperbarui data item di sumber data.
+     * @param item adalah entitas [Item] yang sudah diperbarui.
+     * Fungsi ini menggunakan `suspend` agar dapat berjalan di dalam coroutine.
      */
     suspend fun updateItem(item: Item)
 }

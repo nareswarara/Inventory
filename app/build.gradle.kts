@@ -83,7 +83,14 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
     //Room
+    ///Menambahkan dependensi utama Room untuk mengelola operasi database.
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+
+    // Menambahkan Room Compiler untuk memproses anotasi seperti @Entity, @Dao, dan @Database.
+    // Menggunakan KSP (Kotlin Symbol Processing) untuk menghasilkan kode yang lebih efisien dibandingkan KAPT.
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+
+    // Menambahkan ekstensi Room khusus untuk Kotlin (KTX).
+    // Ekstensi ini mempermudah penggunaan Room dengan sintaksis Kotlin, termasuk dukungan Coroutines dan Flow.
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 }
