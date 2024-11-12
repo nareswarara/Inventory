@@ -63,6 +63,7 @@ fun ItemEntryScreen(
     canNavigateBack: Boolean = true,
     viewModel: ItemEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    // Menggunakan rememberCoroutineScope untuk mendapatkan coroutine scope yang terikat pada lifecycle composable
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
@@ -76,9 +77,11 @@ fun ItemEntryScreen(
         ItemEntryBody(
             itemUiState = viewModel.itemUiState,
             onItemValueChange = viewModel::updateUiState,
+            // Meluncurkan coroutine di dalam scope yang diingat
+            // Tempat untuk menjalankan operasi asinkron, misalnya menyimpan data
             onSaveClick = {coroutineScope.launch {
-                viewModel.saveItem()
-                navigateBack()
+                viewModel.saveItem() // Memanggil fungsi saveItem() pada viewModel untuk menyimpan item ke repository/database jika input valid
+                navigateBack() // Mengarahkan pengguna kembali ke layar sebelumnya setelah proses penyimpanan selesai
             } },
             modifier = Modifier
                 .padding(

@@ -27,6 +27,8 @@ import java.text.NumberFormat
 /**
  * ViewModel to validate and insert items in the Room database.
  */
+// ViewModel yang bertanggung jawab untuk mengelola logika aplikasi terkait item.
+// ItemEntryViewModel akan berkomunikasi dengan ItemsRepository untuk mengakses dan menyimpan data item.
 class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewModel() {
 
     /**
@@ -44,14 +46,21 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
             ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))
     }
 
+    // Fungsi untuk memvalidasi input item dengan memastikan bahwa
+    // nama, harga, dan jumlah tidak kosong.
     private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
+        // Menggunakan `with` untuk mengakses properti dari `uiState` secara langsung
         return with(uiState) {
+            // Memeriksa apakah nama, harga, dan jumlah tidak kosong
             name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
         }
     }
 
+    // Fungsi suspend untuk menyimpan item ke dalam repositori secara asinkron
     suspend fun saveItem(){
+        // Memeriksa apakah input yang dimasukkan valid sebelum menyimpan
         if (validateInput()){
+            // Mengonversi itemDetails menjadi objek Item dan menyimpannya ke repositori
             itemsRepository.insertItem(itemUiState.itemDetails.toItem())
 
         }
